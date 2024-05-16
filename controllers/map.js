@@ -1,3 +1,6 @@
+const path = require('path');
+const rootDir = require('../util/path');
+
 exports.postMap = (req,res,next)=>{
-    res.send('<h2> This is my map page. </h2>');
+    res.sendFile(path.join(rootDir,'views','screen','map.html'));
 };

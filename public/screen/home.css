@@ -104,6 +104,10 @@ body{
     color: rgba(113, 99, 186, 255);
     font-size: 20px;
     
+    
+}
+.header--title a{
+    text-decoration: none;
 }
 .header--title span{
     margin-right: 30px;
@@ -143,7 +147,7 @@ body{
     background: rgb(229,223,223);
     border-radius: 10px;
     padding: 1.2rem;
-    width: 290px;
+    width: 15rem;
     height: 150px;
     display: flex;
     flex-direction: column;
