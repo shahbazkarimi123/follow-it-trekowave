@@ -8,17 +8,32 @@ const path = require('path');
 const rootDir = require('./util/path');
 const app = express();
 
+const getDataFromAPI = require('./models/externalData');
+
 app.use(bodyParse.urlencoded({extended:false}));
 app.use(express.static(path.join(rootDir,'public')
 
-))
+));
 
 app.use(map);
 app.use(login);
 app.use(home);
 
+getDataFromAPI().then(data=>{
+    console.log('Data',data);
+})
+.catch(error=>{
+    console.error("Error",error);
+});
+
+
+
 app.use((req,res,next)=>{
-    res.status(404).send("<h1> Page Not found</h1>");
+
+    
+    res.status(404).send("<h1>Page Not found</h1>");
+
+    console.log();
 });
 
 
