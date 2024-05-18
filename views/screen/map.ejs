@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/screen/map.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <title>Map</title>
+   
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/image/follow_bg_removed.png" alt="Image loading">
+            
+        </div>
+        <hr>
+        <div class="main--table">
+            <table>
+                <tr>
+                    <th>Device</th>
+                    <th><i class="fas fa-tachometer-alt"></i></th>
+    
+                </tr>
+                <tr>
+                    <td>
+                        hi
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        
+
+
+        
+        
+
+    </div>
+    <div id="map"></div>
+    <p><%= recievedData['user_id']%></p>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+    <!-- <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([51.5, -0.09]).addTo(map)
+            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+            .openPopup();
+    </script> -->
+    <script>
+        var map = L.map('map').setView([28.675636, 77.437892], 13); // Set view to a default location
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+       
+        const receivedData = <%-JSON.stringify(recievedData)%>;
+        // Process and add markers to the map
+        receivedData.forEach(item => {
+            if (item.location) {
+                console.log(item.location.lat);
+                const coordinates = [item.location.lat, item.location.lon];
+                const popupContent = `<b>${item.nickname}</b><br>ID: ${item.terminalID}<br>Location Type: ${item.location.locationType}`;
+                L.marker(coordinates).addTo(map)
+                    .bindPopup(popupContent)
+                    .openPopup();
+            }
+        });
+    </script>
+    
+</body>
+</html>

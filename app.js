@@ -8,23 +8,18 @@ const path = require('path');
 const rootDir = require('./util/path');
 const app = express();
 
-const getDataFromAPI = require('./models/externalData');
+
 
 app.use(bodyParse.urlencoded({extended:false}));
-app.use(express.static(path.join(rootDir,'public')
-
-));
+app.use(express.static(path.join(rootDir,'public')));
+app.set('view engine','ejs');
+app.set('views','./views');
 
 app.use(map);
 app.use(login);
 app.use(home);
 
-getDataFromAPI().then(data=>{
-    console.log('Data',data);
-})
-.catch(error=>{
-    console.error("Error",error);
-});
+
 
 
 
