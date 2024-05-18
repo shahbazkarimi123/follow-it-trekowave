@@ -12,7 +12,7 @@ body{
     display: flex;
 }
 #map{
-    width: 80%;
+    width: 70%;
     height: 100vh;
 }
 
@@ -21,7 +21,7 @@ body{
     top: 0;
     left: 0;
     bottom:0;
-    width: 25%;
+    width: 30%;
     padding: 0 1.5rem;
     color: #fff;
     overflow: hidden;
@@ -44,11 +44,40 @@ body{
     border-collapse: collapse;
 }
 .main--table th, .main--table td {
-    border: 1px solid #d62020;
-    padding: 8px;
+   
+    
     color: black;
 }
 
 .main--table th {
     background-color: #f2f2f2;
+    
+    
+    
+}
+.device--heading{
+    padding-left: 4.7rem;
+    padding-right:4.7rem;
+
+}
+.meater--heading{
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
+
+}
+.char--line--heading{
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
+    
+}
+
+.tile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    text-align: start;
+    background-color: #f9f9f9;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
 }
