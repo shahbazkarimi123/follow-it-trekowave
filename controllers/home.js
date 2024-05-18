@@ -3,6 +3,7 @@ const rootDir = require('../util/path');
 
 const getDataFromAPI =require('../models/externalData');
 
+
 exports.getHomePage = async (req,res,next) => {
     let running=0;
     let idle=0;
