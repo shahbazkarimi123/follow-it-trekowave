@@ -1,6 +1,7 @@
 const path = require('path');
 const rootDir = require('../util/path');
 
+const getUserLoginData = require('../models/getUserLoginData');
 exports.getLogin = (req,res,next)=>{
 
     
@@ -8,10 +9,21 @@ exports.getLogin = (req,res,next)=>{
     
 };
 
-exports.postLogin = (req,res,next)=>{
-    console.log(req.body.username);
+exports.postLogin = async (req,res,next)=>{
+    try{
+        let loginResponse = await getUserLoginData(req.body.username,req.body.password);
+        console.log(loginResponse);
+        if(loginResponse.status===200){
+            console.log('inside status code')
+            res.redirect('/');
+        }
+    }catch (error){
+        throw error;
+    }
     
-    res.redirect(307,'/map');
+    
+    
+    
     
 };
 
