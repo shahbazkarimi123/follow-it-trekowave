@@ -22,12 +22,19 @@ exports.getHomePage = async (req,res,next) => {
             }
 
         }
+        let runningPer = ((running/totalDevice)*100).toFixed(1);
+        let stoppedPer = ((stopped/totalDevice)*100).toFixed(1);
+        let idlePer = ((idle/totalDevice)*100).toFixed(1);
+
         // console.log(responseData.data);
         res.render('screen/home-page',{
             totalDevice:totalDevice,
             runningDevice:running,
             stoppedDevice:stopped,
-            idleDevice:idle
+            idleDevice:idle,
+            runningPer:runningPer,
+            stoppedPer:stoppedPer,
+            idlePer:idlePer
         });
     }catch (error){
         console.log("Error",error);
