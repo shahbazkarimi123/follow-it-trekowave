@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,13 @@
     <link rel="stylesheet" href="/screen/map.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <title>Map</title>
-   
+
 </head>
+
 <body>
     <div class="sidebar">
         <div class="logo">
             <img src="/image/follow_bg_removed.png" alt="Image loading">
-            
         </div>
         <hr>
         <div class="main--table">
@@ -22,39 +23,82 @@
                     <th class="device--heading">Device</th>
                     <th class="meater--heading"><i class="fas fa-tachometer-alt"></i></th>
                     <th class="char--line--heading"><i class="fas fa-chart-line"></i></th>
-    
                 </tr>
-                <tr>
-                    <td>
-                        <div class="tile">
-                            <div class="data">device info</div>
-                            
-                        </div>
-                    </td>
-                    <td>
-                        <div class="tile">
-                            <div class="data">status</div>
-                            
-                        </div>
-                    </td>
-                    <td>
-                        <div class="tile">
-                            <div class="data">90%</div>
-                        </div>
-                    </td>
-                </tr>
+                <% recievedData.forEach(item=>{ %>
+                    <tr>
+                        <td>
+                            <div class="tile">
+                                <div class="small-circle 
+                                <% if (item.location.speed > 0) { %>
+                                    green-circle
+                                <% } else if (item.location.speed === 0 && item.location.acc===true) { %>
+                                    yellow-circle
+                                <% } else if (item.location.speed === 0) { %>
+                                    red-circle
+                                <% } %>
+                            "></div>
+                                <div class="data">
+                                    <h4>
+                                        <%= item.username %>
+                                    </h4>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tile">
+                                <div class="data">
+                                    <%= item.location.speed %> km/h
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tile">
+                                <div class="data"><%= distance[item.username] %> km/h</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <% }); %>
             </table>
 
         </div>
-        
 
 
-        
-        
+    </div>
+    <div class="circular-box">
+        <div class="black-circle">
+
+
+            <h6>Total vehicle<br>
+                <%= totalDeviceData %>
+            </h6>
+        </div>
+        <div class="green-circle">
+            <h6>Running<br>
+                <%= runningData %>
+            </h6>
+        </div>
+        <div class="red-circle">
+            <h6>Stopped<br>
+                <%= stoppedData %>
+            </h6>
+        </div>
+        <div class="yellow-circle">
+            <h6>Idle<br>
+                <%= idleData %>
+            </h6>
+        </div>
+        <div class="blue-circle">
+            <h6>Inactive</h6>
+        </div>
 
     </div>
     <div id="map"></div>
-    <p><%= recievedData['user_id']%></p>
+    <p>
+        <%= recievedData['user_id'] %>
+    </p>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="map.js"></script>
@@ -76,20 +120,75 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-       
-        const receivedData = <%-JSON.stringify(recievedData)%>;
+        var blueIcon = L.icon(
+            {
+                iconUrl: '/image/car_icons/car_blue.png',
+                iconSize: [38, 38], // Size of the icon [width, height]
+                iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location [x, y]
+                popupAnchor: [0, -38]
+            }
+        );
+        var greenIcon = L.icon(
+            {
+                iconUrl: '/image/car_icons/car_green.png',
+                iconSize: [38, 38], // Size of the icon [width, height]
+                iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location [x, y]
+                popupAnchor: [0, -38]
+            }
+        );
+        var yellowIcon = L.icon(
+            {
+                iconUrl: '/image/car_icons/car_yellow.png',
+                iconSize: [38, 38], // Size of the icon [width, height]
+                iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location [x, y]
+                popupAnchor: [0, -38]
+            }
+        );
+        var blackIcon = L.icon(
+            {
+                iconUrl: '/image/car_icons/car_black.png',
+                iconSize: [38, 38], // Size of the icon [width, height]
+                iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location [x, y]
+                popupAnchor: [0, -38]
+            }
+        );
+        var redIcon = L.icon(
+            {
+                iconUrl: '/image/car_icons/car_red.png',
+                iconSize: [38, 38], // Size of the icon [width, height]
+                iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location [x, y]
+                popupAnchor: [0, -38]
+            }
+        );
+        // document.getElementById('fetchButton').addEventListener('click', fetchData);
+        
+        async function drawPolyline(terminalID) {
+        try {
+            const response = await fetch(`/getStayData/${terminalID}`);
+            const data = await response.json();
+            const latLngs = data.map(point => L.latLng(point.lat, point.lon));
+            const polyline = L.polyline(latLngs, { color: 'red' }).addTo(map);
+            map.fitBounds(polyline.getBounds());
+        } catch (error) {
+            console.error('Error drawing polyline:', error);
+        }
+    }
+
+        const receivedData = <%- JSON.stringify(recievedData) %>;
         // Process and add markers to the map
         receivedData.forEach(item => {
             if (item.location) {
-                console.log(item.location.lat);
+                // console.log(item.location.lat);
                 const coordinates = [item.location.lat, item.location.lon];
-                const popupContent = `<b>${item.nickname}</b><br>ID: ${item.terminalID}<br>Location Type: ${item.location.locationType}`;
-                L.marker(coordinates).addTo(map)
+                const popupContent = `<b>${item.nickname}</b><br>ID: ${item.terminalID}<br>Location Type: ${item.location.locationType}<br>Speed: ${item.location.speed} km/h<br>Acc: ${item.location.acc ? "On" : "Off"}<br>Path: <button type="button" onclick="drawPolyline("865167041335630")"><a href="/map/history?terminalID=${item.terminalID}">Get Path</a></button>`
+                var customIcon = item.location.acc === false ? redIcon : (item.location.acc === true && item.location.speed === 0) ? yellowIcon : (item.location.speed > 0) ? greenIcon : blueIcon;
+                L.marker(coordinates, { icon: customIcon }).addTo(map)
                     .bindPopup(popupContent)
                     .openPopup();
             }
         });
     </script>
-    
+
 </body>
+
 </html>

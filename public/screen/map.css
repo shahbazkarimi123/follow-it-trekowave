@@ -70,7 +70,15 @@ body{
     padding-right: 1.8rem;
     
 }
+.small-circle{
+    margin-right: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: green;
+    color:green;
 
+}
 .tile{
     display: flex;
     justify-content: space-between;
@@ -81,3 +89,71 @@ body{
     padding: 0.3rem;
     border-radius: 0.5rem;
 }
+.data{
+    font-size: 12px;
+}
+
+.circular-box{
+    position: absolute;
+    display: flex;
+    top: 1%;
+    left:34%;
+    border-radius: 10px;
+    /* width: 60px; */
+    /* height: 60px; */
+    /* border-radius: 45px; */
+    /* background-color: white; */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    /* padding: 10px; */
+    z-index: 1000;
+    gap: 5px;
+
+}
+.circular-box div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+}
+.circular-box div h6 {
+    color: white;
+    text-align: center;
+    font-size: 10px;
+    margin: 0;
+}
+
+.black-circle{
+    /* box-shadow: 2px 0 5px rgba(0,0,0,0.5); */
+    background-color: rgb(5, 5, 5);
+    /* width: 60px;
+    height: 60px;
+    border-radius: 30px; */
+    
+}
+
+.green-circle {
+    
+    background-color: green;
+    
+
+}
+.red-circle{
+    
+    background-color: red;
+    
+}
+.yellow-circle{
+    
+    background-color: rgb(233, 233, 75);
+    
+}
+.blue-circle{
+    
+    background-color: rgb(46, 46, 212);
+    
+    
+}
+

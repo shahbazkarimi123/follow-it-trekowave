@@ -82,13 +82,13 @@
                         <div class="card--header">
                             <div class="amount">
                                 <span class="title">All vehicle</span>
-                                <span class="number"></span>
+                                <!-- <span class="number"></span> -->
+                                <i class="icon"></i>
                             </div>
-                            <i class="icon"></i>
                         </div>
                         <div class="car-icon">
                             <i class="fas fa-car"></i>
-                            <h4><%= totalDevice %></h3>
+                            <h4><%= totalDevice %></h4>
                         </div>
                         <div class="rectangular-box total-vehicle-box">
                             <h5 id="total-vehcle-color">Total vehicle</h5>
@@ -100,16 +100,16 @@
                         <div class="card--header">
                             <div class="amount">
                                 <span class="title">Running</span>
-                                <span class="number"></span>
+                                <!-- <span class="number"></span> -->
+                                <i class="icon"></i>
                             </div>
-                            <i class="icon"></i>
                         </div>
                         <div class="car-icon">
                             <i class="fas fa-car"></i>
-                            <h4><%= runningDevice %></h3>
+                            <h4><%= runningDevice %></h4>
                         </div>
                         <div class="rectangular-box box-dark-green">
-                            <h5>30.3 %</h5>
+                            <h5>%</h5>
                             <h5>Running</h5>
                         </div>
                        
@@ -121,16 +121,16 @@
                         <div class="card--header">
                             <div class="amount">
                                 <span class="title">Idle</span>
-                                <span class="number"></span>
+                                <!-- <span class="number"></span> -->
+                                <i class="icon"></i>
                             </div>
-                            <i class="icon"></i>
                         </div>
                         <div class="car-icon">
                             <i class="fas fa-car"></i>
-                            <h4><%= idleDevice %></h3>
+                            <h4><%= idleDevice %></h4>
                         </div>
                         <div class="rectangular-box box-dark-yellow">
-                            <h5>42.6 %</h5>
+                            <h5>42.6%</h5>
                             <h5>Idle</h5>
                         </div>
                     </div>
@@ -140,17 +140,36 @@
                         <div class="card--header">
                             <div class="amount">
                                 <span class="title">Stopped</span>
-                                <span class="number"></span>
+                                <!-- <span class="number"></span> -->
+                                <i class="icon"></i>
                             </div>
-                            <i class="icon"></i>
                         </div>
                         <div class="car-icon">
                             <i class="fas fa-car"></i>
-                            <h4><%=stoppedDevice %></h3>
+                            <h4><%=stoppedDevice %></h4>
                         </div>
                         <div class="rectangular-box box-dark-red">
                             <h5>20.5%</h5>
                             <h5>Stop</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card--wrapper">
+                    <div class="payment--card">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">Inactive</span>
+                                <!-- <span class="number"></span> -->
+                                <i class="icon"></i>
+                            </div>
+                        </div>
+                        <div class="car-icon">
+                            <i class="fas fa-car"></i>
+                            <h4>0</h4>
+                        </div>
+                        <div class="rectangular-box light-blue">
+                            <h5>20.5%</h5>
+                            <h5>Inactive</h5>
                         </div>
                     </div>
                 </div>

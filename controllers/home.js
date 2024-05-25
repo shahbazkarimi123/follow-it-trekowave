@@ -10,8 +10,9 @@ exports.getHomePage = async (req,res,next) => {
     let stopped =0;
     try{
         const responseData = await getDataFromAPI();
-        let totalDevice = responseData.data.length;
-        for(let data of responseData.data){
+        let totalDevice = responseData.data.data.length;
+        // console.log(responseData.data.data);
+        for(let data of responseData.data.data){
             if(data['location']['acc']===false){
                 stopped++;
             }else if(data['location']['acc']===true && data['location']['speed']===0){

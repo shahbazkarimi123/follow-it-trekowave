@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>history</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/screen/map-history.css">
+</head>
+
+<body>
+    <
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([<%=lat%>,<%=lon%>], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        var redIcon = L.icon(
+            {
+                iconUrl: '/image/car_icons/car_red.png',
+                iconSize: [38, 38], // Size of the icon [width, height]
+                iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location [x, y]
+                popupAnchor: [0, -38]
+            });
+        var coordinates = [];
+
+        // Loop through the data and extract coordinates
+        var polylineData = <%- JSON.stringify(polylineData) %>;
+        if(polylineData && polylineData.length > 0){
+
+            polylineData.forEach(function (data) {
+                coordinates.push([data.lat, data.lon]);
+            });
+        
+
+        // Create a polyline using coordinates
+        var polyline = L.polyline(coordinates, { color: 'red', weight: 5 }).addTo(map);
+
+        // Fit the map to the polyline bounds
+        map.fitBounds(polyline.getBounds());
+
+        // Add a marker
+        
+
+        // Function to animate marker along each segment of the polyline
+        function animateMarker(coordinates, duration) {
+            var index = 0;
+
+            function moveToNext() {
+                if (index >= coordinates.length - 1) return;
+
+                var startLatLng = coordinates[index];
+                var endLatLng = coordinates[index + 1];
+                var startTime = null;
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    var progress = (timestamp - startTime) / duration;
+                    var lat = startLatLng[0] + (endLatLng[0] - startLatLng[0]) * progress;
+                    var lng = startLatLng[1] + (endLatLng[1] - startLatLng[1]) * progress;
+                    marker.setLatLng([lat, lng]);
+
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        marker.setLatLng(endLatLng);
+                        index++;
+                        moveToNext();
+                    }
+                }
+
+                window.requestAnimationFrame(step);
+            }
+
+            moveToNext();
+        }
+
+        // Function to start the animation from the clicked point
+        function moveMarker(event) {
+            var clickedLatLng = event.latlng;
+            var startIndex = coordinates.findIndex(coord => coord[0] === clickedLatLng.lat && coord[1] === clickedLatLng.lng);
+            if (startIndex === -1) startIndex = 0; // If not found, start from the beginning
+            var remainingCoordinates = coordinates.slice(startIndex);
+            animateMarker(remainingCoordinates, 8000); // 2 seconds per segment
+        }
+
+        // Add click event listener to the polyline
+         polyline.on('click', moveMarker);
+    }
+    var marker = L.marker([<%=lat%>, <%=lon%>], { icon: redIcon }).addTo(map)
+            .bindPopup('<b><%=username%></b> <br>ID: <%=id%> <br>Location Type: <%=locationType%><br>Speed: <%=speed%> km/h<br>Acc:<%= acc ? "On":"Off"%> ')
+            .openPopup();
+
+    </script>
+</body>
+
+</html>
